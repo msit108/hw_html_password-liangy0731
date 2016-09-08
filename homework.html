@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+     <script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/seedrandom.js"></script>
+<style>
+#randomTable {
+    font-family: monospace;
+    font-size: 2.0em;
+}
+    #randomTable {border-radius: 10px; border: 1px solid  #e6e6e6; width:35%; height:15em ;
+}
+
+    #input1{width: 10em}
+
+</style>
+</head>
+<body>
+
+    <div class="jumbotron">
+  <h1>Hello, 密碼程式</h1>
+  <p>...</p>
+  
+</div>
+    
+    <table>
+        <tr><td>請輸入亂數表的編號：</td>     <td><input type="text" class="form-control" id="txtSeed" value="1234" /></td>               </tr>
+
+    </table>
+  
+<!--幫每個radio設定一個value讓等等程式可以取回值使用-->
+   <div>
+    <label>請選一個選項:</label>
+    <input type="radio" name="radioGroup" id="radioA" value="1"/> 純數字
+    <input type="radio" name="radioGroup" id="radioB" value="2"/> 小寫英文+數字
+    <input type="radio" name="radioGroup" id="radioC" value="3"/> 大小寫英文+數字
+  </div>
+    <button type="button" id="btnGo2" class="btn btn-danger navbar-btn">產生亂數表</button>
+    <br>
+<div id="randomTable"></div>
+
+   
+<script>
+
+  
+  
+    //依據radio被選取時取得的值不同時而sPool就不一樣
+    //當radioA被選時<取得的值設定給變數S<
+    //當S=1時,sPool變數就是0123456789,,以此類推
+    $("#btnGo2").click(function () {
+        var sPool = "";
+        var s = $("input[name='radioGroup']:checked").val();
+                if (s == 1) sPool = "0123456789";
+                if (s == 2) sPool = "abcdefghijkmnpqrstuvwxyz0123456789";
+                if (s == 3) sPool = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz0123456789";;
+               $("#report").append(sPool);
+
+
+
+
+    var result = "";
+	
+	
+
+    Math.seedrandom($("#txtSeed").val()); // 設定亂數種子
+	var iRandom = 0; var ch = "?";
+	for (iRow = 1; iRow <= 10; iRow++) {
+		var sLine = (iRow + 100).toString().substr(1, 2) + ": "; 
+		for (iCol = 1; iCol <= 10; iCol++) {
+			iRandom = Math.floor(Math.random() * sPool.length);
+			ch = sPool.substr(iRandom, 1);
+			sLine += ch;
+		}
+		result += sLine + "<br>";
+	}
+	$("#randomTable").html(result);
+});
+
+</script>
+
+</body>
+</html>
